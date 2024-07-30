@@ -32,5 +32,18 @@ namespace HomeWork3.Repositories
                 .ToListAsync() :
                 await _context.Products.ToListAsync();
         }
+
+        public async Task UpdateAsync(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Product product)
+        {
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

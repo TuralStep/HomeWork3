@@ -1,6 +1,10 @@
+using HomeWork3.Data;
+using HomeWork3.Repositories;
+using HomeWork3.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +28,16 @@ namespace HomeWork3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            var connection = "Data Source=(localdb)\\ProjectModels;Initial Catalog=master;Integrated Security=True;";
+            services.AddDbContext<ProductDbContext>(opt =>
+            {
+                opt.UseSqlServer(connection);
+            });
+
+            services.AddScoped<IProductRepository, EFProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
